@@ -1,0 +1,12 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+body.toplevel_page_ta-advisor{
+    background-color: #fff;
+}
+
+.app{
+    margin-top: 50px;
+}
