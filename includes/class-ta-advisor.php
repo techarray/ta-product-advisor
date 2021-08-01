@@ -157,6 +157,10 @@ class TA_Advisor {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_tc_pages' );
+		//quiz ajax functions
+		$this->loader->add_action( 'wp_ajax_ta_get_quizes', $plugin_admin, 'ta_get_quizes' );
+		$this->loader->add_action( 'wp_ajax_ta_add_quiz', $plugin_admin, 'ta_add_quiz' );
+		$this->loader->add_action( 'wp_ajax_ta_edit_quiz', $plugin_admin, 'ta_edit_quiz' );
 
 	}
 

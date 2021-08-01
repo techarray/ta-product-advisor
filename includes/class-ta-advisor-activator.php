@@ -40,44 +40,42 @@ class TA_Advisor_Activator {
 		//database collate
 		$charset_collate = $wpdb->get_charset_collate();
 
+		//plugins tables variables
 		$tca_db_version = '1.0';
 		$tc_prefix = "ta_";
+		$table_quiz = $tc_prefix . 'quiz';
+		$table_question = $tc_prefix . 'question';
+		$table_answer = $tc_prefix . 'answer';
 
 		/**
-		 * quiz table
+		 * Table Queries
 		 */
-		$table_quiz = $tc_prefix . 'quiz';
-		$quiz_sql = "CREATE TABLE $table_quiz ( 
-		id int(11) NOT NULL AUTO_INCREMENT, 
-		quiz_name tinytext NOT NULL, 
-		PRIMARY KEY  (id) 
+		// quiz table
+		$quiz_sql = "CREATE TABLE IF NOT EXISTS $table_quiz ( 
+			id int(11) NOT NULL AUTO_INCREMENT, 
+			quiz_name tinytext NOT NULL, 
+			PRIMARY KEY  (id) 
 		) $charset_collate;";
 
 
-		/**
-		 * question table
-		 */
-		$table_question = $tc_prefix . 'question';
-		$question_sql = "CREATE TABLE $table_question (
-		id int(11) NOT NULL AUTO_INCREMENT,
-		question text NOT NULL,
-		question_type text NOT NULL,
-		quiz_id int NOT NULL,
-		PRIMARY KEY  (id),
-		FOREIGN KEY (quiz_id) REFERENCES $table_quiz(id)
+		// question table
+		$question_sql = "CREATE TABLE IF NOT EXISTS $table_question (
+			id int(11) NOT NULL AUTO_INCREMENT,
+			question text NOT NULL,
+			question_type text NOT NULL,
+			quiz_id int NOT NULL,
+			PRIMARY KEY  (id),
+			FOREIGN KEY (quiz_id) REFERENCES $table_quiz(id)
 		) $charset_collate;";		
 		
 
-		/**
-		 * Answer table
-		 */
-		$answer_table = $tc_prefix . 'answer';
-		$answer_sql = "CREATE TABLE $answer_table (
-		id int(11) NOT NULL AUTO_INCREMENT,
-		answer text NOT NULL,
-		question_id int NOT NULL,
-		PRIMARY KEY  (id),
-		FOREIGN KEY (question_id) REFERENCES $table_question(id)
+		// Answer table
+		$answer_sql = "CREATE TABLE IF NOT EXISTS $table_answer (
+			id int(11) NOT NULL AUTO_INCREMENT,
+			answer text NOT NULL,
+			question_id int NOT NULL,
+			PRIMARY KEY  (id),
+			FOREIGN KEY (question_id) REFERENCES $table_question(id)
 		) $charset_collate;";
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );

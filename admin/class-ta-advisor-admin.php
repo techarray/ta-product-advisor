@@ -97,29 +97,96 @@ class TA_Advisor_Admin {
 		 */
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/vue.js', array(), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ta-advisor-admin.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script( 
+			$this->plugin_name, 
+			'ajax_object', 
+			[ 
+				'ajax_url' => admin_url('admin-ajax.php'), 
+				'ta_advisor_nonce' =>  wp_create_nonce('ta_advisor_nonce')
+			] );
 
 	}
 
 
 	public function register_tc_pages(){
 		add_menu_page( 'TA Advisor', 'TA Advisor', 'manage_options', 'ta-advisor', [$this, 'ta_advisor_main_page_callback'], plugin_dir_url( __FILE__ ) . '/images/icon.png', 6 );
+		add_submenu_page( 'ta-advisor', 'Quizes', 'Quizes', 'manage_options', 'ta-advisor-quiz', [$this, 'ta_advisor_quiz_page_callback'] );
+		
 	}
 
 	public function ta_advisor_main_page_callback(){
-		ob_start();		
-
-		$data = $this->ta_get_quizes(); 
-		
+		ob_start();
 		require_once( plugin_dir_path( __FILE__ ) . 'partials/ta-advisor-main-page.php' );
 		$html = ob_get_contents();
 		ob_end_clean();
 		echo $html;
 	}
 
+	public function ta_advisor_quiz_page_callback(){
+		ob_start();
+		require_once( plugin_dir_path( __FILE__ ) . 'partials/ta-advisor-quiz-page.php' );
+		$html = ob_get_contents();
+		ob_end_clean();
+		echo $html;
+	}
+
+	// get all quizes
 	public function ta_get_quizes(){
 		global $wpdb;
 		$table_name = "ta_quiz";
-		$results = $wpdb->get_results( "SELECT * FROM {$table_name}", ARRAY_A );
-		return $results;
+		$result = $wpdb->get_results( "SELECT * FROM {$table_name}", ARRAY_A );
+
+		echo wp_json_encode($result);
+		wp_die();
+	}
+
+	// get one quiz
+	public function ta_get_quiz(){
+		
+		global $wpdb;
+		$table_name = "ta_quiz";
+		$quiz_id = $_POST['id'];
+
+		$result = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE id={$quiz_id}", ARRAY_A );
+
+		echo wp_json_encode($result);
+		wp_die();
+	}
+
+	// add new quiz
+	public function ta_add_quiz(){
+		global $wpdb;
+		$table_name = "ta_quiz";
+		
+		$quiz_name = $_POST['quiz_name'];
+
+		$results = $wpdb->insert(
+			$table_name,
+			[
+				'id' => null,
+				'quiz_name' => $quiz_name
+			]
+		);
+		echo json_encode($results);
+	}
+	// edit quiz
+	public function ta_edit_quiz(){
+		global $wpdb;
+		$table_name = "ta_quiz";
+		
+		$quiz_id = $_POST['quiz_id'];
+		$quiz_name = $_POST['quiz_name'];
+
+		$results = $wpdb->update(
+			$table_name,
+			[
+				'id' => $quiz_id,
+				'quiz_name' => $quiz_name
+			],
+			['id' => $quiz_id],
+			[ '%d', '%s'],
+			['%d']
+		);
+		echo json_encode($results);
 	}
 }	
