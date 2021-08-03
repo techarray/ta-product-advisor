@@ -1,9 +1,16 @@
+<?php 
+$save_icon = $this->get_svg("save");
+$close_icon = $this->get_svg("close"); 
+?>
+
 <div id="app" class="app">
-    <div class="wrap">
-        <header class="page-header mb-4">
-            <h1 class="wp-heading-inline">TechArray Product Advisor</h1><button type="button" class="btn btn-sm btn-primary" v-on:click="toggleShowAddQuiz">{{ addQuizBtn.text }}</button>
+    
+    <div class="container">
+        <header class="header">
+            <h1 class="wp-heading-inline">Quizes</h1><button type="button" class="icon_button" v-on:click="toggleShowAddQuiz"><?php echo $this->get_svg("add"); ?></button>
         </header>
         <div class="add_quiz col-sm-12 col-md-4" id="add_quiz" v-show="showAddQuiz">
+            
             <form method="POST" @submit="checkForm">
                 <div class="form-group">
                     <p v-if="errors.length">
@@ -14,29 +21,23 @@
                     </p>
                 </div>
                 <div class="form-group">
-                    <label for="quiz_name">Quiz Name</label>
+                    <label for="quiz_name">Name</label>
                     <input class="form-control" type="text" name="quiz_name" id="quiz_name" v-model="quiz_name"/>
                 </div>
-                <input class="btn btn-primary btn-sm" type="submit" value="Submit">
+                <div class="icon_button_bar">
+                    <button type="submit" class="icon_button"><?php echo $save_icon; ?></button>
+                    <button type="button" class="icon_button" v-on:click="toggleShowAddQuiz"><?php echo $close_icon; ?></button>
+                </div>
             </form>
         </div>
-        <div class="table-responsive" v-show="showQuizTable">
-            <table class="table table-primary table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Quiz Name</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(item, index) in quizes" :key="item.id">
-                        <th scope="col">{{ index }}</th>
-                        <td>{{ item.quiz_name }}</td>
-                        <td><button type="button" class="btn btn-info me-2" :data-id="item.id">Edit</button><button type="button" class="btn btn-danger">Delete</button></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="quizes" v-show="showQuizTable">
+            <div class="quiz" v-for="(item, index) in quizes" :key="item.id">
+                <h4 class="title">{{ item.quiz_name }}</h4>
+                <ul class="actions">
+                    <li><button type="button" class="flat_button" :data-id="item.id"><?php echo $this->get_svg("edit"); ?></button></li>
+                    <li><button type="button" class="flat_button"><?php echo $this->get_svg("delete"); ?></button></li>
+                </ul>
+            </div>
         </div>
     </div>  
 </div>
@@ -47,8 +48,8 @@
             quizes: null,
             showAddQuiz: false,
             showQuizTable: true,
-            addQuizBtn: {
-                text: "Add New"
+            quizBtn: {
+                text: "add"
             },
             quiz_name: null,
             errors: [],
@@ -78,7 +79,7 @@
             toggleShowAddQuiz () {
                 this.showAddQuiz = !this.showAddQuiz
                 this.showQuizTable = !this.showQuizTable
-                this.addQuizBtn.text = this.showAddQuiz ? "Cancel" : "Add New"
+                this.quizBtn.text = this.showAddQuiz ? "close" : "add"
             },
             checkForm: function (e) {
                 if (this.quiz_name) {

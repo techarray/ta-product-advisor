@@ -72,7 +72,7 @@ class TA_Advisor_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'normalize', plugin_dir_url( __FILE__ ) . 'css/normalize.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/ta-advisor-admin.css', array(), $this->version, 'all' );
 
 	}
@@ -188,5 +188,16 @@ class TA_Advisor_Admin {
 			['%d']
 		);
 		echo json_encode($results);
+	}
+
+	public function get_svg( $name ){
+		$svg_path = dirname(__FILE__) . '/images/' . $name . '.svg';
+
+		ob_start();
+		require_once ($svg_path);
+		$svg = ob_get_contents();
+		ob_end_clean();
+		return $svg;
+		
 	}
 }	
