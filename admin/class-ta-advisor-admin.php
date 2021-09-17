@@ -110,19 +110,9 @@ class TA_Advisor_Admin {
 
 	public function register_tc_pages(){
 		add_menu_page( 'TA Advisor', 'TA Advisor', 'manage_options', 'ta-advisor', [$this, 'ta_advisor_main_page_callback'], plugin_dir_url( __FILE__ ) . '/images/icon.png', 6 );
-		add_submenu_page( 'ta-advisor', 'Quizes', 'Quizes', 'manage_options', 'ta-advisor-quiz', [$this, 'ta_advisor_quiz_page_callback'] );
-		
 	}
 
 	public function ta_advisor_main_page_callback(){
-		ob_start();
-		require_once( plugin_dir_path( __FILE__ ) . 'partials/ta-advisor-main-page.php' );
-		$html = ob_get_contents();
-		ob_end_clean();
-		echo $html;
-	}
-
-	public function ta_advisor_quiz_page_callback(){
 		ob_start();
 		require_once( plugin_dir_path( __FILE__ ) . 'partials/ta-advisor-quiz-page.php' );
 		$html = ob_get_contents();
