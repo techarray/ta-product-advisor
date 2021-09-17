@@ -95,7 +95,8 @@ class TA_Advisor_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/vue.js', array(), $this->version, false );
+		wp_enqueue_script( 'vue', plugin_dir_url( __FILE__ ) . 'js/vue.js', array(), $this->version, false );
+		wp_enqueue_script( 'vue-router', plugin_dir_url( __FILE__ ) . 'js/vue-router.js', array(), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ta-advisor-admin.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( 
 			$this->plugin_name, 
@@ -110,11 +111,19 @@ class TA_Advisor_Admin {
 
 	public function register_tc_pages(){
 		add_menu_page( 'TA Advisor', 'TA Advisor', 'manage_options', 'ta-advisor', [$this, 'ta_advisor_main_page_callback'], plugin_dir_url( __FILE__ ) . '/images/icon.png', 6 );
+		add_submenu_page( 'ta-advisor', 'TA Advisor Dashboard','TA Advisor Dashboard', 'manage_options', 'ta-advisor-dashboard', [$this, 'ta_advisor_sub_page_callback']);
 	}
 
 	public function ta_advisor_main_page_callback(){
 		ob_start();
-		require_once( plugin_dir_path( __FILE__ ) . 'partials/ta-advisor-quiz-page.php' );
+		require_once( plugin_dir_path( __FILE__ ) . 'partials/ta-advisor-admin-display.php' );
+		$html = ob_get_contents();
+		ob_end_clean();
+		echo $html;
+	}
+	public function ta_advisor_sub_page_callback(){
+		ob_start();
+		require_once( plugin_dir_path( __FILE__ ) . 'partials/ta-advisor-admin-display.php' );
 		$html = ob_get_contents();
 		ob_end_clean();
 		echo $html;

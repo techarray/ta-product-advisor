@@ -2,54 +2,74 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
-.app {
+* {
   box-sizing: border-box;
-  width: 600px;
+}
+.app {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  width: 960px;
   border-radius: 10px;
   margin-top: 50px;
-  padding: 30px;
-  background-color: #ffffff; }
-  .app .header {
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; }
-    .app .header h1 {
-      font-size: 32px;
-      font-weight: 700;
-      line-height: 1.25; }
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ffffff;
+  position: relative;
+}
+.app .header {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app .header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
+}
 
 .card {
   border-radius: 10px;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15); }
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+}
 
 .quiz {
   padding: 10px 30px;
-  border: 1px solid #dedede;
   border-radius: 10px;
+  border: 1px solid #dedede;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
-  margin: 2px;
   display: flex;
   flex-wrap: wrap;
-  align-items: center; }
-  .quiz .title {
-    width: 70%;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.5;
-    margin: 0px; }
-  .quiz .actions {
-    width: 30%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start; }
-    .quiz .actions > li {
-      margin: 0px 5px; }
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.quiz .title {
+  width: 70%;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0px;
+}
+
+.quiz .actions {
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.quiz .actions>li {
+  margin: 0px 5px;
+}
 
 .icon_button_bar {
   display: flex;
   justify-content: space-evenly;
-  align-items: center; }
+  align-items: center;
+}
 
 .icon_button {
   width: 40px;
@@ -60,11 +80,14 @@
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
   display: flex;
   justify-content: center;
-  align-items: center; }
-  .icon_button > svg {
-    width: 20px;
-    height: 20px;
-    fill: #ffffff; }
+  align-items: center;
+}
+
+.icon_button>svg {
+  width: 20px;
+  height: 20px;
+  fill: #ffffff;
+}
 
 .flat_button {
   width: 30px;
@@ -73,11 +96,14 @@
   border: unset;
   display: flex;
   justify-content: center;
-  align-items: center; }
-  .flat_button > svg {
-    width: 25px;
-    height: 25px;
-    fill: #3d3d3d; }
+  align-items: center;
+}
+
+.flat_button>svg {
+  width: 25px;
+  height: 25px;
+  fill: #3d3d3d;
+}
 
 form label {
   display: block;
@@ -85,19 +111,52 @@ form label {
   font-size: 21px;
   font-weight: 700;
   line-height: 1.25;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+}
 
-form input[type="text"],
-form input[type="email"],
-form input[type="password"],
-form input[type="number"],
-form input[type="date"],
-form input[type="url"] {
+form input[type="text"], form input[type="email"], form input[type="password"], form input[type="number"], form input[type="date"], form input[type="url"] {
   display: block;
   width: 100%;
-  height: 50px; }
+  height: 50px;
+}
 
 form input[type="text"] {
   border: 1px solid #3d3d3d;
   padding: 10px;
-  margin-bottom: 25px; }
+  margin-bottom: 25px;
+}
+
+/* app navigation */
+.app-navigation {
+  width: 25%;
+  padding: 30px;
+  background-color: rgba(215, 215, 215, 0.15);
+}
+ul.app-navigation-menu {
+  margin: 0px;
+}
+ul.app-navigation-menu > li {
+  margin-bottom: 0;
+  margin-bottom: 10px;
+}
+ul.app-navigation-menu > li > a {
+  display: block;
+  font-size: 21px;
+  font-weight: 400;
+  color: inherit;
+  text-decoration: none;
+  padding: 15px 30px;
+  color: #747474;
+  box-shadow: none !important;
+}
+.app-content{
+  width: 75%;
+  padding: 30px;
+}
+ul.app-navigation-menu > li > a:hover{
+  color: #3d3d3d;
+}
+nav.app-navigation li .router-link-active{
+  box-shadow: none;
+  color: #2370ff;
+}
